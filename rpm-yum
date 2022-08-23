@@ -1,0 +1,236 @@
+rpm
+Unix-like operating system command
+Stands for: Red-hat Package Manager (RPM)
+Function: Manipulate RPM packages
+Syntax: rpm -i|--install install-options PACKAGE_FILE ...
+
+
+
+cnt+c -> to intrupt ctnl+z -> To intrupt 
+
+yum info package-name 
+yum list | less -> To see page wise list
+yum list -> complete list till end
+yum history
+
+
+To kill a pid=1479 
+
+State  : Traced/Stopped, pid: 1479
+^C
+
+Exiting on user cancel.
+[root@cloudgenlinux ~]# kill -9 1479
+
+[root@cloudgenlinux ~]# yum update -y   ---> will update if anything need
+
+
+yum list install | less
+
+yum groupinstall "Server with GUI" -y
+
+yum install packagename
+yum update packagename
+yum remove packagename
+
+downgrade a package -> yum downgrade package-name
+ to reinstall againg after downgrade ->
+yum reinstall package-name
+
+yum list package -> to list of packaged
+
+yum list installed | less -> to list out all installed package
+
+yum list available | less _> to list out supported package a/c to system
+
+yum search package -> to search a particular package
+
+yum provides date 
+
+
+
+
+[root@cloudgenlinux ~]# yum shell
+Loaded plugins: fastestmirror, langpacks
+> vsftpd
+verysecure file transfer protocl daemon
+
+mclean
+
+
+[root@cloudgenlinux ~]# yum makecache
+Loaded plugins: fastestmirror, langpac
+
+
+
+
+[root@cloudgenlinux ~]# yum repo list
+Loaded plugins: fastestmirror, langpacks
+No such command: repo. Please use /usr/bin/yum --help
+[root@cloudgenlinux ~]#
+[root@cloudgenlinux ~]# yum repolist
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: centos.excellmedia.net
+ * epel: repo.extreme-ix.org
+ * extras: centos.excellmedia.net
+ * updates: centos.excellmedia.net
+repo id                                                  repo name                                                                               status
+base/7/x86_64                                            CentOS-7 - Base                                                                         10,072
+*epel/x86_64                                             Extra Packages for Enterprise Linux 7 - x86_64                                          13,758
+extras/7/x86_64                                          CentOS-7 - Extras                                                                          512
+updates/7/x86_64                                         CentOS-7 - Updates                                                                       4,135
+repolist: 28,477
+[root@cloudgenlinux ~]# cd /etc/yum.repos.d/
+[root@cloudgenlinux yum.repos.d]# ll
+total 48
+-rw-r--r--. 1 root root 1664 Nov 23  2020 CentOS-Base.repo
+-rw-r--r--. 1 root root 1309 Nov 23  2020 CentOS-CR.repo
+-rw-r--r--. 1 root root  649 Nov 23  2020 CentOS-Debuginfo.repo
+-rw-r--r--. 1 root root  314 Nov 23  2020 CentOS-fasttrack.repo
+-rw-r--r--. 1 root root  630 Nov 23  2020 CentOS-Media.repo
+-rw-r--r--. 1 root root 1331 Nov 23  2020 CentOS-Sources.repo
+-rw-r--r--. 1 root root 8515 Nov 23  2020 CentOS-Vault.repo
+-rw-r--r--. 1 root root  616 Nov 23  2020 CentOS-x86_64-kernel.repo
+-rw-r--r--. 1 root root  951 Oct  2  2017 epel.repo
+-rw-r--r--. 1 root root 1050 Oct  2  2017 epel-testing.repo
+[root@cloudgenlinux yum.repos.d]# cat CentOS-Base.repo
+# CentOS-Base.repo
+#
+# The mirror system uses the connecting IP address of the client and the
+# update status of each mirror to pick mirrors that are updated to and
+# geographically close to the client.  You should use this for CentOS updates
+# unless you are manually picking other mirrors.
+#
+# If the mirrorlist= does not work for you, as a fall back you can try the
+# remarked out baseurl= line instead.
+#
+#
+
+[base]
+name=CentOS-$releasever - Base
+mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os&infra=$infra
+#baseurl=http://mirror.centos.org/centos/$releasever/os/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+#released updates
+[updates]
+name=CentOS-$releasever - Updates
+mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates&infra=$infra
+#baseurl=http://mirror.centos.org/centos/$releasever/updates/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+#additional packages that may be useful
+[extras]
+name=CentOS-$releasever - Extras
+mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras&infra=$infra
+#baseurl=http://mirror.centos.org/centos/$releasever/extras/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+#additional packages that extend functionality of existing packages
+[centosplus]
+name=CentOS-$releasever - Plus
+mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=centosplus&infra=$infra
+#baseurl=http://mirror.centos.org/centos/$releasever/centosplus/$basearch/
+gpgcheck=1
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+[root@cloudgenlinux yum.repos.d]#
+
+
+jenkings is not a centos, its a third party 
+yum 
+
+
+
+yum clean all
+
+[root@cloudgenlinux ~]# yum history
+Loaded plugins: fastestmirror, langpacks
+ID     | Login user               | Date and time    | Action(s)      | Altered
+-------------------------------------------------------------------------------
+     7 | root <root>              | 2022-08-20 11:21 | Install        |   69
+     6 | root <root>              | 2022-08-20 11:18 | Install        |    1
+     5 | root <root>              | 2022-08-20 10:45 | Install        | 1016 EE
+     4 | root <root>              | 2022-08-20 10:04 | I, U           |  115
+     3 | root <root>              | 2022-08-02 08:05 | Install        |    5
+     2 | root <root>              | 2022-08-01 19:49 | Install        |   31
+     1 | System <unset>           | 2022-07-19 19:52 | Install        |  299
+history list
+
+
+
+yum grouplist
+-> shows installed environment groups
+
+[root@cloudgenlinux ~]# yum groupinstall "Compute Node" -y
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: centos.excellmedia.net
+ * extras: centos.excellmedia.net
+ * updates: centos.excellmedia.net
+Warning: Group scientific does not have any packages to install.
+Maybe run: yum groups mark install (see man yum)
+No packages in any requested group available to install or update
+[root@cloudgenlinux ~]# yum install epel-release -y
+
+
+epel -> extra package for enterprise lineup
+
+
+yum grouplist
+
+
+[root@cloudgenlinux ~]# yum grouplist
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: centos.excellmedia.net
+ * epel: repo.extreme-ix.org
+ * extras: centos.excellmedia.net
+ * updates: centos.excellmedia.net
+Installed Environment Groups:
+   Server with GUI
+   GNOME Desktop
+Available Environment Groups:
+   Minimal Install
+   Compute Node
+   Infrastructure Server
+   File and Print Server
+   Cinnamon Desktop
+   MATE Desktop
+   Basic Web Server
+   Virtualization Host
+   KDE Plasma Workspaces
+   Development and Creative Workstation
+Available Groups:
+   Cinnamon
+   Compatibility Libraries
+   Console Internet Tools
+   Development Tools
+   Educational Software
+   Electronic Lab
+   Fedora Packager
+   General Purpose Desktop
+   Graphical Administration Tools
+   Haskell
+   LXQt Desktop
+   Legacy UNIX Compatibility
+   MATE
+   Milkymist
+   Scientific Support
+   Security Tools
+   Smart Card Support
+   System Administration Tools
+   System Management
+   TurboGears application framework
+   Xfce
+Done
+
+select a particular group Ex. Basic Web Server  to install
+
+[root@cloudgenlinux ~]# yum groupinstall "Basic Web Server" -y
+

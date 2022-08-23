@@ -1,0 +1,302 @@
+
+Docker installation
+
+[root@localhost ~]# yum install yum-utils device-mapper-persistent-data lvm2 -y
+
+
+yum-cofig-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install docker-ce -y
+
+systemctl enable docker
+systemctl start docker
+systemctl start docker
+systemctl status docker
+docker version
+
+docker cli,engine,hub(repostory/registry)
+
+
+
+
+
+
+docker run -itd centos /bin/bash 
+rpm -qi docker -ce
+rpm -qi docker
+
+systemctl docker
+systemctl enable docker
+docker version
+docker -version
+docker info
+docker search
+
+	example : docker search centos
+				docker search ubuntu
+				docker search java
+
+docker search image_name
+docker pull -> our desired images
+
+ex.:
+	docker pull centos
+	docker pull ubuntu
+	docker pull java
+
+docker pull image_name
+
+[root@localhost ~]# docker images tabs
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+docker ps :
+[root@localhost ~]# docker ps ( runnig container and paused container )
+CONTAINER ID   IMAGE     COMMAND       CREATED      STATUS          PORTS     NAMES
+2350c0189070   centos    "/bin/bash"   4 days ago   Up 11 minutes             shankar
+docker ps -a :
+[root@localhost ~]# docker ps -a (all types of images exited paused running)
+
+example:
+	[root@localhost ~]# docker ps -a
+CONTAINER ID   IMAGE         COMMAND       CREATED      STATUS                  PORTS     NAMES
+2350c0189070   centos        "/bin/bash"   4 days ago   Up 30 minutes                     shankar
+0d02dc6bc8e5   centos        "/bin/bash"   4 days ago   Exited (0) 4 days ago             phani
+f0960251e51c   centos        "/bin/bash"   4 days ago   Exited (0) 4 days ago             cloudgen-centos
+3b8ce64c469c   hello-world   "/hello"      4 days ago   Exited (0) 4 days ago             dazzling_hugle
+[root@localhost ~]# docker ps -a
+CONTAINER ID   IMAGE         COMMAND       CREATED      STATUS                  PORTS     NAMES
+2350c0189070   centos        "/bin/bash"   4 days ago   Up 27 minutes                     shankar
+0d02dc6bc8e5   centos        "/bin/bash"   4 days ago   Exited (0) 4 days ago             phani
+f0960251e51c   centos        "/bin/bash"   4 days ago   Exited (0) 4 days ago             nice_cori
+3b8ce64c469c   hello-world   "/hello"      4 days ago   Exited (0) 4 days ago             dazzling_hugle
+
+
+restart the running container
+
+syntax:
+
+docker resart running container 
+[root@localhost ~]# docker ps
+CONTAINER ID   IMAGE     COMMAND       CREATED      STATUS          PORTS     NAMES
+2350c0189070   centos    "/bin/bash"   4 days ago   Up 32 minutes             shankar
+f0960251e51c   centos    "/bin/bash"   4 days ago   Up 6 seconds              cloudgen-centos
+[root@localhost ~]# docker ps
+CONTAINER ID   IMAGE     COMMAND       CREATED      STATUS          PORTS     NAMES
+2350c0189070   centos    "/bin/bash"   4 days ago   Up 38 minutes             shankar
+f0960251e51c   centos    "/bin/bash"   4 days ago   Up 5 minutes              cloudgen-centos
+[root@localhost ~]# docker restart f0
+f0
+
+
+docker stop container/containername
+
+
+
+
+docker ps -aq
+
+docker run -it image-name command-name
+docker run -itd image-name command-name
+docker run -it --name container-name image-name command-name
+docker run -itd --name container-name image-name command-name 
+ctrl+p+q
+exit
+[root@localhost ~]# docker images
+REPOSITORY    TAG       IMAGE ID       CREATED         SIZE
+hello-world   latest    feb5d9fea6a5   10 months ago   13.3kB
+centos        latest    5d0da3dc9764   11 months ago   231MB
+
+docker start container-name / container id
+: to start the stopped container or exited container
+
+
+example:
+
+docker rename :
+
+example : 
+[root@localhost ~]# docker rename nice_cori cloudgen-centos
+
+
+
+ docker rename existed container-name new-container-name
+
+ docker start container-name/container-id ( which is exited and stoped)
+Ex.: docker start cloudgen-centos
+
+
+docker unpause paused containerID/containerNAME
+pausing the running container
+
+
+killing the running container
+
+docker kill container-id/container.name
+
+		kill and stop are same
+
+deleting the running container
+
+docker rm -f running container
+
+forcebly deleting
+
+
+--> deleting/killing/pausing/unpausing/stopping all or more than 1 container 
+
+syntax:
+
+stopping the all running containers
+ docker stop $(docker ps -q)
+
+[root@localhost ~]#  docker stop $(docker ps -q)
+3335305f5c53
+d4e2bbcb3bf2
+[root@localhost ~]# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+[root@localhost ~]# docker ps -a
+CONTAINER ID   IMAGE     COMMAND       CREATED         STATUS                        PORTS     NAMES
+3335305f5c53   centos    "/bin/bash"   3 minutes ago   Exited (0) 45 seconds ago               mavenserver.com
+d4e2bbcb3bf2   centos    "/bin/bash"   3 minutes ago   Exited (0) 45 seconds ago               jekinserver.com
+f0bea19c9eba   centos    "/bin/bas"    4 minutes ago   Created                                 gitserver.com
+2350c0189070   centos    "/bin/bash"   4 days ago      Exited (137) 26 minutes ago             shankar
+[root@localhost ~]#
+
+to all T
+docker rm $(docker ps -a)
+docker rm $(docker ps -aq)
+   example :
+[root@localhost ~]# docker rm $(docker ps -aq) -> remove and delete all exited containers at a time
+[root@localhost ~]# docker ps -a
+CONTAINER ID   IMAGE     COMMAND       CREATED         STATUS                          PORTS     NAMES
+3335305f5c53   centos    "/bin/bash"   4 minutes ago   Exited (0) About a minute ago             mavenserver.com
+d4e2bbcb3bf2   centos    "/bin/bash"   4 minutes ago   Exited (0) About a minute ago             jekinserver.com
+f0bea19c9eba   centos    "/bin/bas"    5 minutes ago   Created                                   gitserver.com
+2350c0189070   centos    "/bin/bash"   4 days ago      Exited (137) 26 minutes ago               shankar
+[root@localhost ~]# docker rm $(docker ps -aq)
+3335305f5c53
+d4e2bbcb3bf2
+f0bea19c9eba
+2350c0189070
+[root@localhost ~]# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+[root@localhost ~]# docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+[root@localhost ~]#
+
+
+[root@localhost ~]# docker run -itd --name gitserver.com centos /bin/bash
+c7771ed5c596ca7edf56999bc3d4eba839c5b4517bf155e389aec9f01eadc987
+[root@localhost ~]# docker run -itd --name jenkinserver.com centos /bin/bash
+9ca967b58bed2cf8d7862b2dc69ac30fa90f3d6ccbcd705d7692c50315751264
+[root@localhost ~]# docker run -itd --name buildserver.com centos /bin/bash
+16f504d132e7dffe37660c2145cf26206288e633396fdbca76eb8075e7a4239d
+[root@localhost ~]# docker ps -a
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS          PORTS     NAMES
+16f504d132e7   centos    "/bin/bash"   6 seconds ago    Up 6 seconds              buildserver.com
+9ca967b58bed   centos    "/bin/bash"   16 seconds ago   Up 16 seconds             jenkinserver.com
+c7771ed5c596   centos    "/bin/bash"   33 seconds ago   Up 32 seconds             gitserver.com
+[root@localhost ~]# docker stop gitserver.com
+gitserver.com
+[root@localhost ~]# docker ps -a
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS                     PORTS     NAMES
+16f504d132e7   centos    "/bin/bash"   23 seconds ago   Up 22 seconds                        buildserver.com
+9ca967b58bed   centos    "/bin/bash"   33 seconds ago   Up 32 seconds                        jenkinserver.com
+c7771ed5c596   centos    "/bin/bash"   50 seconds ago   Exited (0) 4 seconds ago             gitserver.com
+[root@localhost ~]# docker pause jenkinserver.com
+jenkinserver.com
+[root@localhost ~]# docker ps -a
+CONTAINER ID   IMAGE     COMMAND       CREATED              STATUS                      PORTS     NAMES
+16f504d132e7   centos    "/bin/bash"   44 seconds ago       Up 43 seconds                         buildserver.com
+9ca967b58bed   centos    "/bin/bash"   54 seconds ago       Up 53 seconds (Paused)                jenkinserver.com
+c7771ed5c596   centos    "/bin/bash"   About a minute ago   Exited (0) 24 seconds ago             gitserver.com
+[root@localhost ~]# docker rm -f $(docker ps -aq)
+16f504d132e7
+9ca967b58bed
+c7771ed5c596
+[root@localhost ~]# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+[root@localhost ~]# docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+[root@localhost ~]#
+
+
+
+
+
+to delete one or more containers
+
+docker rm container-id container-id
+docker rm $(docker ps -a)
+remove only exited and stopped containers
+docker rm -f $(docker ps) - delete all running containers at a time, we should use -f all runng containers forecebly
+
+[root@localhost ~]# docker rm -f $(docker ps)
+
+
+creating the container by using run command:
+
+example:
+
+[root@localhost ~]# docker run -itd --name gitserver.com centos /bin/bash
+
+
+Example:
+[root@localhost ~]# docker run -itd --name mavenserver centos /bin/bash
+b00446b8fcc64887e4081ee76ca923f0bde1e336e7f0720601f36c47a3378df7
+[root@localhost ~]# docker ps
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS          PORTS     NAMES
+b00446b8fcc6   centos    "/bin/bash"   7 seconds ago    Up 7 seconds              mavenserver
+96a13b256de5   centos    "/bin/bash"   26 seconds ago   Up 26 seconds             gitserver
+5b1000861cb0   centos    "/bin/bash"   55 seconds ago   Up 54 seconds             jenkins
+f0960251e51c   centos    "/bin/bash"   5 days ago       Up 22 minutes             cloudgen-centos
+[root@localhost ~]#
+
+
+[root@localhost ~]# docker ps -a
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS                  PORTS     NAMES
+518314b7fcfa   centos    "/bin/bash"   20 seconds ago   Up 19 seconds                     cicdserver.com
+fa7bf43007e9   centos    "/bin/bash"   37 seconds ago   Up 35 seconds                     jenkinserver.com
+b191bb8cb43f   centos    "/bin/bash"   8 minutes ago    Up 8 minutes (Paused)             buildserver.com
+[root@localhost ~]# docker kill $(docker ps)
+518314b7fcfa
+cicdserver.com
+fa7bf43007e9
+jenkinserver.com
+b191bb8cb43f
+buildserver.com
+
+
+To pause and unpause all containers:
+
+
+[root@localhost ~]# docker ps -a
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS         PORTS     NAMES
+518314b7fcfa   centos    "/bin/bash"   4 minutes ago    Up 4 seconds             cicdserver.com
+fa7bf43007e9   centos    "/bin/bash"   5 minutes ago    Up 3 seconds             jenkinserver.com
+b191bb8cb43f   centos    "/bin/bash"   13 minutes ago   Up 3 seconds             buildserver.com
+
+[root@localhost ~]# docker pause $(docker ps -q)
+518314b7fcfa
+fa7bf43007e9
+b191bb8cb43f
+
+[root@localhost ~]# docker ps -a
+
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS                  PORTS     NAMES
+518314b7fcfa   centos    "/bin/bash"   7 minutes ago    Up 2 minutes (Paused)             cicdserver.com
+fa7bf43007e9   centos    "/bin/bash"   7 minutes ago    Up 2 minutes (Paused)             jenkinserver.com
+b191bb8cb43f   centos    "/bin/bash"   16 minutes ago   Up 2 minutes (Paused)             buildserver.com
+
+[root@localhost ~]# docker unpause $(docker ps -q)
+518314b7fcfa
+fa7bf43007e9
+b191bb8cb43f
+
+[root@localhost ~]# docker ps -a
+CONTAINER ID   IMAGE     COMMAND       CREATED          STATUS         PORTS     NAMES
+518314b7fcfa   centos    "/bin/bash"   7 minutes ago    Up 2 minutes             cicdserver.com
+fa7bf43007e9   centos    "/bin/bash"   8 minutes ago    Up 2 minutes             jenkinserver.com
+b191bb8cb43f   centos    "/bin/bash"   16 minutes ago   Up 2 minutes             buildserver.com
+
+[root@localhost ~]#
+
+
